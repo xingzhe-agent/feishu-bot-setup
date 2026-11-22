@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  LaunchAgent 模板（路线 B）。占位符：__LABEL__ __NODE__ __HOME__ __NAME__ __APP_ID__
+  __NODE__   填 node 的绝对路径（command -v node）
+  __HOME__   填用户主目录绝对路径（launchd 不展开波浪号）
+  __LABEL__  例：com.example.mybot-feishu-bot（避免写死个人用户名）
+  __APP_ID__ 飞书 app_id，会作为 FEISHU_APP_ID 注入桥进程
+  替换命令与完整说明见 SKILL.md「B7 部署桥」。
+  必须在用户自己的终端会话里 bootstrap，不要从受限 agent shell 执行。
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>__LABEL__</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>__NODE__</string>
+    <string>__HOME__/.local/share/lark-__NAME__-bot/bridge.mjs</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>FEISHU_APP_ID</key>
+    <string>__APP_ID__</string>
+    <key>FEISHU_BOT_DIR</key>
+    <string>__HOME__/.local/share/lark-__NAME__-bot</string>
+    <key>FEISHU_BACKEND</key>
+    <string>http</string>
+  </dict>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>ThrottleInterval</key>
+  <integer>10</integer>
+  <key>StandardOutPath</key>
+  <string>__HOME__/.local/share/lark-__NAME__-bot/bridge.log</string>
+  <key>StandardErrorPath</key>
+  <string>__HOME__/.local/share/lark-__NAME__-bot/bridge.err.log</string>
+  <key>ProcessType</key>
+  <string>Interactive</string>
+</dict>
+</plist>
